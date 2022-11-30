@@ -5,7 +5,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: zan-30.uffs.edu.br
+    - host: nome_dominio
       http:
         paths:
           - pathType: Prefix
@@ -22,7 +22,7 @@ metadata:
   name: path-ingress-api
   annotations:
     nginx.ingress.kubernetes.io/configuration-snippet: |
-      rewrite /kubenews http://zan-30.uffs.edu.br;
+      rewrite /kubenews http://nome_dominio;
 spec:
   ingressClassName: nginx
   rules:    
