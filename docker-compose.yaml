@@ -1,0 +1,54 @@
+version: "3.8"
+
+volumes:
+   pgdb-kube_vol:
+
+networks:
+  kube_net:
+    driver: bridge
+
+services:
+  app-kube:
+    image: giozandonai/kube-news:v1
+    build: 
+      context: ./src
+    container_name: app-kube
+    restart: always
+    depends_on:
+      - pgdb-kube
+    ports:
+      - 8080:8080
+    environment:         
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USER}
+      DB_PASSWORD: ${DB_PWD}
+      DB_HOST: pgdb-kube
+    networks:
+      - kube_net
+
+  pgdb-kube:
+    image: postgres:14.5-alpine
+    container_name: pgdb-kube
+    restart: always
+    volumes:
+      - pgdb-kube_vol:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${DB_PWD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_DATABASE}
+    networks:
+      - kube_net
+
+  pgadmin-kube:
+    image: dpage/pgadmin4:6
+    container_name: pgadmin-kube
+    restart: always
+    depends_on:
+      - pgdb-kube
+    ports:
+      - 8090:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: teste@teste.com
+      PGADMIN_DEFAULT_PASSWORD: testepwd
+    networks:
+      - kube_net

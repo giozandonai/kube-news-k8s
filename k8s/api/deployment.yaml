@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: kubenews
+          image: giozandonai/kube-news:v1
+          env:
+          - name: DB_PASSWORD
+            value: "Gio@123#"
+          - name: DB_USERNAME
+            value: "giozandonai"
+          - name: DB_DATABASE
+            value: "kubenews"
+          - name: DB_HOST
+            value: "postgre-service"
