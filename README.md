@@ -20,7 +20,7 @@ CMD ["node", "server.js"]
 
 **Docker Hub - [giozandonai/kube-news](https://hub.docker.com/u/giozandonai/kube-news)**
 
-##Subindo com DOCKER COMPOSE
+## Subindo com DOCKER COMPOSE
 `$ docker-compose --env-file .env up -d`
 
 **Acessando a aplicação:**
